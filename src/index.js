@@ -1,4 +1,3 @@
-import { create } from 'canvas-confetti';
 import Signe from './signe'
 
 
