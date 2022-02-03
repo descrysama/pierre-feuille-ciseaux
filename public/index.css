@@ -66,7 +66,7 @@ a {
   flex-direction: row;
 }
 
-.gamebutton {
+.gamebuttons {
   font-size: 25px;
   margin: 10px;
   width: 110px;
@@ -79,7 +79,7 @@ a {
   align-items: center;
 }
 
-.gamebutton:hover {
+.gamebuttons:hover {
   cursor: pointer;
 }
 
@@ -95,6 +95,7 @@ a {
 .game-img {
   height: 160px;
   margin: 10px;
+  transition: all .3s ease-in-out;
 }
 
 .left-content {
@@ -111,4 +112,8 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+button {
+  color: white;
 }
