@@ -82,13 +82,10 @@ function beginGame() {
           score2++
           playerchoice = 2;
         } else if (gameButtons.textContent == 'Pierre' && randomchoice == 0) {
-          console.log(randomchoice);
           playerchoice = 0;
         } else if (gameButtons.textContent == 'Papier' && randomchoice == 1) {
-          console.log(randomchoice);
           playerchoice = 1;
         } else if (gameButtons.textContent == 'Ciseaux' && randomchoice == 2) {
-          console.log(randomchoice);
           playerchoice = 2;
         } else {
           score1++
