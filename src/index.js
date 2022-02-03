@@ -1,15 +1,26 @@
+import Signe from './signe'
 
 
 let contentSelect = document.querySelector('.content');
-let ImgPPC = ['/img/rock.png', '/img/paper.png', '/img/cisors.png'];
 let score1 = 0; //Score du joueur
 let score2 = 0; //Score de l'IA
 let randomchoice;
-let playerchoice;
+let imgRandomChoice;
+let imgPlayerChoice;
+
+let pierreSigne = new Signe('Pierre', 'Papier', 'Ciseaux', './img/rock.png');
+let papierSigne = new Signe('Papier', 'Ciseaux', 'Pierre', './img/paper.png');
+let ciseauxSigne = new Signe('Ciseaux', 'Pierre', 'Papier', './img/cisors.png');
+
+let signeArray = [pierreSigne, papierSigne, ciseauxSigne]
+let signeArrayImg = [pierreSigne.image, papierSigne.image, ciseauxSigne.image]
 
 // Choix aléatoire pour l'IA.
 const randomChoice = () => {
-  return Math.floor(Math.random()* 3);
+  let randomnumber = Math.floor(Math.random() * 3);
+  randomchoice = signeArray[randomnumber].name;
+  return randomchoice;
+  
 }
 // Fonction qui ajoute mes boutons de jeu.
 const controllerBox = () => {
@@ -54,53 +65,63 @@ const gameInfos = () => {
 const updateInfos = () => {
   let getScore1 = document.getElementById('score0');
   let getScore2 = document.getElementById('score1');
-  let getImg1 = document.getElementById('img0')
-  let getImg2 = document.getElementById('img1')
+  let getImg1 = document.getElementById('img0');
+  let getImg2 = document.getElementById('img1');
   getScore1.textContent = score1;
   getScore2.textContent = score2;
-  getImg1.src = ImgPPC[playerchoice]
-  getImg2.src = ImgPPC[randomchoice]
+  getImg1.src = imgPlayerChoice;
+  getImg2.src = imgRandomChoice;
+
   
 }
 //fonction déclanchée par le bouton "JOUER" dans le HTML et qui lance le jeu.
-function beginGame() {
-    document.getElementById('playButton').remove();
-    gameInfos()
-    controllerBox()
-    //boucle qui permet de savoir sur quoi on clique.
-    for (let i = 0; i < 3; i++) {
-      let gameButtons = document.getElementById('gamebutton'+[i]);
-      gameButtons.onclick = () => {
-        randomchoice = randomChoice();
-        if (gameButtons.textContent == 'Pierre' && randomchoice == 1) {
-          score2++
-          playerchoice = 0;
-        } else if (gameButtons.textContent == 'Papier' && randomchoice == 2) {
-          score2++
-          playerchoice = 1;
-        } else if (gameButtons.textContent == 'Ciseaux' && randomchoice == 0) {
-          score2++
-          playerchoice = 2;
-        } else if (gameButtons.textContent == 'Pierre' && randomchoice == 0) {
-          playerchoice = 0;
-        } else if (gameButtons.textContent == 'Papier' && randomchoice == 1) {
-          playerchoice = 1;
-        } else if (gameButtons.textContent == 'Ciseaux' && randomchoice == 2) {
-          playerchoice = 2;
+document.getElementById('playButton').onclick = () => {
+  document.getElementById('playButton').remove();
+  gameInfos()
+  controllerBox()
+  //boucle qui permet de savoir sur quoi on clique.
+  for (let i = 0; i != 3; i++) {
+    let gameButtons = document.getElementById('gamebutton'+[i]);
+    gameButtons.onclick = () => {
+      randomChoice();
+      if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.loseAgainst) {
+        score2++
+        imgPlayerChoice = pierreSigne.image
+        imgRandomChoice = papierSigne.image
+      } else if (gameButtons.textContent == papierSigne.name && randomchoice == papierSigne.loseAgainst) {
+        score2++
+        imgPlayerChoice = papierSigne.image
+        imgRandomChoice = ciseauxSigne.image
+      } else if (gameButtons.textContent == ciseauxSigne.name && randomchoice == ciseauxSigne.loseAgainst) {
+        score2++
+        imgPlayerChoice = ciseauxSigne.image
+        imgRandomChoice = pierreSigne.image
+      } else if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.name) {
+        imgPlayerChoice = pierreSigne.image
+        imgRandomChoice = pierreSigne.image
+      } else if (gameButtons.textContent == papierSigne.name && randomchoice == papierSigne.name) {
+        imgPlayerChoice = papierSigne.image
+        imgRandomChoice = papierSigne.image
+      } else if (gameButtons.textContent == ciseauxSigne.name && randomchoice == ciseauxSigne.name) {
+        imgPlayerChoice = ciseauxSigne.image
+        imgRandomChoice = ciseauxSigne.image
+      } else {
+        score1++
+        if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.winAgainst) {
+          imgPlayerChoice = pierreSigne.image
+          imgRandomChoice = ciseauxSigne.image
+        } else if (gameButtons.textContent == papierSigne.name && randomchoice == papierSigne.winAgainst) {
+          imgPlayerChoice = papierSigne.image
+          imgRandomChoice = pierreSigne.image
         } else {
-          score1++
-          if (gameButtons.textContent == 'Pierre') {
-            playerchoice = 0;
-          } else if (gameButtons.textContent == 'Papier') {
-            playerchoice = 1;
-          } else {
-            playerchoice = 2;
-          }
+            imgPlayerChoice = ciseauxSigne.image
+            imgRandomChoice = papierSigne.image
         }
-
-        updateInfos()
       }
+
+      updateInfos()
     }
+  }
 }
 
 
