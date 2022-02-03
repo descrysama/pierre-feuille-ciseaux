@@ -85,7 +85,7 @@ a {
 
 .game-info {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 600px;
@@ -116,4 +116,19 @@ a {
 
 button {
   color: white;
+}
+
+.splitter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 700px;
+}
+
+.green {
+  color: green !important;
+}
+
+#statusinfo {
+  color: red;
 }

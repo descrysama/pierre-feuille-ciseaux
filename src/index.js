@@ -1,3 +1,4 @@
+import { create } from 'canvas-confetti';
 import Signe from './signe'
 
 
@@ -7,6 +8,10 @@ let score2 = 0; //Score de l'IA
 let randomchoice;
 let imgRandomChoice;
 let imgPlayerChoice;
+let toggle = false;
+let winSound = new Audio('./sounds/winning.wav')
+let loseSound = new Audio('./sounds/loosing.wav')
+
 
 let pierreSigne = new Signe('Pierre', 'Papier', 'Ciseaux', './img/rock.png');
 let papierSigne = new Signe('Papier', 'Ciseaux', 'Pierre', './img/paper.png');
@@ -42,8 +47,11 @@ const controllerBox = () => {
 // Fonction qui affiche les données de jeu.
 const gameInfos = () => {
     let createParentDiv = document.createElement('div');
+    let createMiddleDiv = document.createElement('div');
+    let createh1 = document.createElement('h1');
+    createh1.setAttribute('id', 'statusinfo')
+    createMiddleDiv.setAttribute('class','splitter');
     createParentDiv.setAttribute('class','game-info');
-
     let leftright = ['left-content', 'right-content'];
     for (let i = 0; i < leftright.length; i++) {
       let createChildDiv = document.createElement('div');
@@ -57,9 +65,12 @@ const gameInfos = () => {
       createScore.textContent = 0;
       createChildDiv.appendChild(createScore);
       createChildDiv.appendChild(createImg);
-      createParentDiv.appendChild(createChildDiv);
-      contentSelect.appendChild(createParentDiv)
+      createMiddleDiv.appendChild(createChildDiv)
+      createParentDiv.appendChild(createMiddleDiv);
+      
     }
+    createParentDiv.appendChild(createh1)
+    contentSelect.appendChild(createParentDiv)
 }
 // fonction qui réaffiche les valeurs.
 const updateInfos = () => {
@@ -82,31 +93,54 @@ document.getElementById('playButton').onclick = () => {
   //boucle qui permet de savoir sur quoi on clique.
   for (let i = 0; i != 3; i++) {
     let gameButtons = document.getElementById('gamebutton'+[i]);
+    let statusinfo = document.getElementById('statusinfo')
     gameButtons.onclick = () => {
       randomChoice();
+      statusinfo.textContent = "";
+      if (toggle == true) {
+        statusinfo.classList.toggle('green')
+        toggle = false;
+      }
+      //cycle de conditions pour le jeu (Ordre de supériorité des signes).
       if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.loseAgainst) {
         score2++
         imgPlayerChoice = pierreSigne.image
         imgRandomChoice = papierSigne.image
+        statusinfo.textContent = "Perdu t'es nul( le ) 🤣!";
+        loseSound.play()
       } else if (gameButtons.textContent == papierSigne.name && randomchoice == papierSigne.loseAgainst) {
         score2++
         imgPlayerChoice = papierSigne.image
         imgRandomChoice = ciseauxSigne.image
+        statusinfo.textContent = "Perdu t'es nul( le ) 🤣!";
+        loseSound.play()
       } else if (gameButtons.textContent == ciseauxSigne.name && randomchoice == ciseauxSigne.loseAgainst) {
         score2++
         imgPlayerChoice = ciseauxSigne.image
         imgRandomChoice = pierreSigne.image
+        statusinfo.textContent = "Perdu t'es nul( le ) 🤣!";
+        loseSound.play()
       } else if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.name) {
         imgPlayerChoice = pierreSigne.image
         imgRandomChoice = pierreSigne.image
+        statusinfo.textContent = "Egalité 🥱";
+        loseSound.play()
       } else if (gameButtons.textContent == papierSigne.name && randomchoice == papierSigne.name) {
         imgPlayerChoice = papierSigne.image
         imgRandomChoice = papierSigne.image
+        statusinfo.textContent = "Egalité 🥱";
+        loseSound.play()
       } else if (gameButtons.textContent == ciseauxSigne.name && randomchoice == ciseauxSigne.name) {
         imgPlayerChoice = ciseauxSigne.image
         imgRandomChoice = ciseauxSigne.image
+        statusinfo.textContent = "Egalité 🥱";
+        loseSound.play()
       } else {
         score1++
+        statusinfo.textContent = "Gagné (Bien joué) ✔!";
+        winSound.play()
+        statusinfo.classList.toggle('green')
+        toggle = true;
         if (gameButtons.textContent == pierreSigne.name && randomchoice == pierreSigne.winAgainst) {
           imgPlayerChoice = pierreSigne.image
           imgRandomChoice = ciseauxSigne.image
