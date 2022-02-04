@@ -12,5 +12,12 @@
 
 ### npm start
 
+## Si vous ne voulez pas installer mais jouer quand même : 
+
+> https://elated-chandrasekhar-338352.netlify.app/
+
+#### Voici aussi le lien des maquettes faites avec figma : 
+
+> https://www.figma.com/file/kWqiLvRyKCTjmYtoX3FAiD/Untitled?node-id=1%3A29
 
 # Puis jouez 😎 !
